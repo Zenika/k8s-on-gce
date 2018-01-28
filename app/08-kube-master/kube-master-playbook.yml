@@ -1,0 +1,60 @@
+- hosts: controllers
+  remote_user: root
+  tasks:
+  - name: get kube-apiserver
+    get_url:
+      url: https://storage.googleapis.com/kubernetes-release/release/v1.9.0/bin/linux/amd64/kube-apiserver
+      dest: /usr/local/bin/kube-apiserver
+      mode: 0700
+  - name: get kube-controller-manager
+    get_url:
+      url: https://storage.googleapis.com/kubernetes-release/release/v1.9.0/bin/linux/amd64/kube-controller-manager
+      dest: /usr/local/bin/kube-controller-manager
+      mode: 0700
+  - name: get kube-scheduler
+    get_url:
+      url: https://storage.googleapis.com/kubernetes-release/release/v1.9.0/bin/linux/amd64/kube-scheduler
+      dest: /usr/local/bin/kube-scheduler
+      mode: 0700
+  - name: get kubectl
+    get_url:
+      url: https://storage.googleapis.com/kubernetes-release/release/v1.9.0/bin/linux/amd64/kubectl
+      dest: /usr/local/bin/kubectl
+      mode: 0700
+  - name: Creates directory /var/lib/kubernetes
+    file: path=/var/lib/kubernetes state=directory
+  - name: copy ca cert
+    copy:
+      src: /root/app/04-certs/ca.pem
+      dest: /var/lib/kubernetes/ca.pem
+  - name: copy ca key
+    copy:
+      src: /root/app/04-certs/ca-key.pem
+      dest: /var/lib/kubernetes/ca-key.pem
+  - name: copy kubernetes key
+    copy:
+      src: /root/app/04-certs/kubernetes-key.pem
+      dest: /var/lib/kubernetes/kubernetes-key.pem
+  - name: copy kubernetes cert
+    copy:
+      src: /root/app/04-certs/kubernetes.pem
+      dest: /var/lib/kubernetes/kubernetes.pem
+  - name: copy encryption config
+    copy:
+      src: /root/app/06-encryption/encryption-config.yaml
+      dest: /var/lib/kubernetes/encryption-config.yaml
+  - name: copy define-kube-services script
+    copy:
+      src: /root/app/08-kube-master/define-kube-services.sh
+      dest: /root/define-kube-services.sh
+      owner: root
+      group: root
+      mode: 0744
+  - name: Create kube-* conf
+    command: /root/define-kube-services.sh
+  - name: Reload systemd
+    command: systemctl daemon-reload
+  - name: Enable kube-apiserver kube-controller-manager kube-scheduler
+    command: systemctl enable kube-apiserver kube-controller-manager kube-scheduler
+  - name: Start kube-apiserver kube-controller-manager kube-scheduler
+    command: systemctl start kube-apiserver kube-controller-manager kube-scheduler

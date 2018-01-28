@@ -1,0 +1,43 @@
+- hosts: controllers
+  remote_user: root
+  tasks:
+  - name: Unarchive etcd
+    unarchive:
+      src: https://github.com/coreos/etcd/releases/download/v3.2.11/etcd-v3.2.11-linux-amd64.tar.gz
+      dest: /root
+      remote_src: yes
+  - name: Move etcd bin
+    command: mv /root/etcd-v3.2.11-linux-amd64/etcd /usr/local/bin/
+  - name: Move etcdctl bin
+    command: mv /root/etcd-v3.2.11-linux-amd64/etcdctl /usr/local/bin/
+  - name: Creates directory /etc/etcd
+    file: path=/etc/etcd state=directory
+  - name: Creates directory /var/lib/etcd
+    file: path=/var/lib/etcd state=directory
+  - name: copy ca cert
+    copy:
+      src: /root/app/04-certs/ca.pem
+      dest: /etc/etcd/ca.pem
+  - name: copy kubernetes key
+    copy:
+      src: /root/app/04-certs/kubernetes-key.pem
+      dest: /etc/etcd/kubernetes-key.pem
+  - name: copy kubernetes cert
+    copy:
+      src: /root/app/04-certs/kubernetes.pem
+      dest: /etc/etcd/kubernetes.pem
+  - name: copy define-etcd-service.sh
+    copy:
+      src: /root/app/07-etcd/define-etcd-service.sh
+      dest: /root/define-etcd-service.sh
+      owner: root
+      group: root
+      mode: 0744
+  - name: Create etcd conf
+    command: /root/define-etcd-service.sh
+  - name: Reload systemd
+    command: systemctl daemon-reload
+  - name: Enable etcd
+    command: systemctl enable etcd
+  - name: Start etcd
+    command: systemctl start etcd

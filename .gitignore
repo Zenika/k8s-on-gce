@@ -1,0 +1,5 @@
+*adc.json
+*.terraform
+*.tfstate*
+*inventory.cfg
+*.retry
