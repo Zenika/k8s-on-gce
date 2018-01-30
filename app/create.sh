@@ -1,11 +1,12 @@
 #!/bin/sh
 
-rm /root/.ssh/google_compute_known*
+rm -f /root/.ssh/google_compute_engine*
+# ⚠️ Here we create a key with no passphrase
 ssh-keygen -q -P "" -f /root/.ssh/google_compute_engine
 
 terraform init 03-provisionning
 
-terraform apply -auto-approve 03-provisionning
+terraform apply -auto-approve -var "gce_zone=${GCLOUD_ZONE}" 03-provisionning
 
 cd /root/app/04-certs
 ./gen-certs.sh
@@ -17,7 +18,6 @@ cd /root/app/06-encryption
 ./gen-encrypt.sh
 
 cd /root/app
-source 00-ansible/profile.sh
 00-ansible/create-inventory.sh
 
 ansible-playbook -i inventory.cfg 07-etcd/etcd-playbook.yml

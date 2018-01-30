@@ -5,11 +5,13 @@ variable "gce_ssh_pub_key_file" {
   default = "~/.ssh/google_compute_engine.pub"
 }
 
+variable "gce_zone" {
+  type = "string"
+}
+
 // Configure the Google Cloud provider
 provider "google" {
   credentials = "${file("adc.json")}"
-  project     = "k8s-hw-1"
-  region      = "europe-west1"
 }
 
 resource "google_compute_network" "default" {
@@ -70,7 +72,7 @@ resource "google_compute_instance" "controller" {
   count = 3
   name            = "controller-${count.index}"
   machine_type    = "n1-standard-1"
-  zone            = "europe-west1-b"
+  zone            = "${var.gce_zone}"
   can_ip_forward  = true
 
   tags = ["kubernetes-the-easy-way","controller"]
@@ -107,7 +109,7 @@ resource "google_compute_instance" "worker" {
   count = 3
   name            = "worker-${count.index}"
   machine_type    = "n1-standard-1"
-  zone            = "europe-west1-b"
+  zone            = "${var.gce_zone}"
   can_ip_forward  = true
 
   tags = ["kubernetes-the-easy-way","worker"]

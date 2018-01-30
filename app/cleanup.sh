@@ -23,4 +23,4 @@ rm 05-kubeconfig/*.kubeconfig
 rm 04-certs/*.pem
 rm 04-certs/*.csr
 
-terraform destroy -force 03-provisionning/
+terraform destroy -var "gce_zone=${GCLOUD_ZONE}" -force 03-provisionning/
