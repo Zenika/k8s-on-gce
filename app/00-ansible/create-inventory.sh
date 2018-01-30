@@ -1,7 +1,7 @@
 #!/bin/sh
 
 cat > inventory.cfg <<EOF
-[test]
+[all]
 $(gcloud compute instances list | grep -v NAME | awk '{ print $5 }')
 [workers]
 $(gcloud compute instances list --filter="(tags.items:worker)" | grep -v NAME | awk '{ print $5 }')
