@@ -28,7 +28,7 @@ ansible-playbook -i inventory.cfg 08-kube-master/rbac-playbook.yml
 KUBERNETES_PUBLIC_ADDRESS=$(gcloud compute addresses describe kubernetes-the-easy-way \
   --region $(gcloud config get-value compute/region) \
   --format 'value(name)')
-# TODO: quiet
+  
 #terraform create -var "gce_ip_address=${KUBERNETES_PUBLIC_ADDRESS}" 08-kube-master
 gcloud compute target-pools create kubernetes-target-pool
 

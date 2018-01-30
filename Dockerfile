@@ -11,9 +11,6 @@ RUN apk update && \
     curl -o /usr/local/bin/kubectl https://storage.googleapis.com/kubernetes-release/release/v1.9.0/bin/linux/amd64/kubectl && \
     curl -o /root/$TERRAFORM_FILE https://releases.hashicorp.com/terraform/0.11.2/$TERRAFORM_FILE
 
-ADD profile /root/.bashrc
-ADD ansible.cfg /root/.ansible.cfg
-
 WORKDIR /root
 
 RUN unzip $TERRAFORM_FILE && \
@@ -24,6 +21,9 @@ RUN unzip $TERRAFORM_FILE && \
     /root/google-cloud-sdk/bin/gcloud config set disable_usage_reporting true && \
     chmod +x /usr/local/bin/cfssl* /usr/local/bin/kubectl && \
     pip2 install ansible
+
+ADD profile /root/.bashrc
+ADD ansible.cfg /root/.ansible.cfg
 
 ENTRYPOINT [ "/bin/bash" ]
 
