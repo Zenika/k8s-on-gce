@@ -10,7 +10,7 @@ kubernetes cluster on GCE.
 - Adapt `profile` to match your desired region, zone and project
 - Launch `./in.sh`, it will build a docker image and launch a container with
 all needed tools
-- In the container `cd app` and `./create.sh` and wait for ~10mins
+- In the container `cd app`, `./create.sh` and wait for ~10mins
 - And you're done ! 🚀
 
 🚽 When you finish, launch `./cleanup.sh` to remove all gce resources.
