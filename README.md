@@ -7,6 +7,7 @@ kubernetes cluster on GCE.
 ## How to use 🗺
 
 - Put your `adc.json` in the `app` dir (See [Gcloud account](#gcloud-account) for details on this file) .
+- Adapt `profile` to match your desired region, zone and project
 - Launch `./in.sh`, it will build a docker image and launch a container with
 all needed tools
 - In the container `cd app` and `./create.sh` and wait for ~10mins
