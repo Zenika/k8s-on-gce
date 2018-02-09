@@ -6,11 +6,11 @@
   },
   "names": [
     {
-      "C": "US",
-      "L": "Portland",
+      "C": "FR",
+      "L": "Nantes",
       "O": "system:masters",
       "OU": "Kubernetes The Easy Way",
-      "ST": "Oregon"
+      "ST": "Loire-Atlantique"
     }
   ]
 }
