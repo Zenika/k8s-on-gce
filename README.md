@@ -27,6 +27,18 @@ The `adc.json` is your service account key file.
 You can find more infos on how to setup a service account 
 [here](https://cloud.google.com/video-intelligence/docs/common/auth#set_up_a_service_account).
 
+## Addons
+
+### Traefik ingress
+
+- Goto 13-addons dir: `cd 13-addons`
+- Launch `./deploy-traefik.sh`, this will create the cluster role needed for traefik, the traefik daemonset and the firewall rule to enable trafic in
+
+### Tests
+
+- Goto 14-example dir: `cd 14-example`
+- Deploy whoami app example: `kubectl apply -f whoami.yml`
+
 ## Credits 👍
 
 This work is an automation of [kubernetes-the-hard-way](https://github.com/kelseyhightower/kubernetes-the-hard-way)
