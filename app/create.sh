@@ -4,9 +4,9 @@ rm -f /root/.ssh/google_compute_engine*
 # ⚠️ Here we create a key with no passphrase
 ssh-keygen -q -P "" -f /root/.ssh/google_compute_engine
 
-terraform init 03-provisionning
+terraform init 03-provisioning
 
-terraform apply -auto-approve -var "gce_zone=${GCLOUD_ZONE}" 03-provisionning
+terraform apply -auto-approve -var "gce_zone=${GCLOUD_ZONE}" 03-provisioning
 
 cd /root/app/04-certs
 ./gen-certs.sh
