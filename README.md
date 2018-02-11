@@ -31,12 +31,18 @@ You can find more infos on how to setup a service account
 
 ### Traefik ingress
 
-- Goto 13-addons dir: `cd 13-addons`
+- Go to 13-addons dir: `cd 13-addons`
 - Launch `./deploy-traefik.sh`, this will create the cluster role needed for traefik, the traefik daemonset and the firewall rule to enable trafic in
+
+### Dashboard
+
+- Go to 13-addons dir: `cd 13-addons`
+- Launch `./deploy-dashboard.sh`, this will create the service account used for the dashboard (⚠️ with tihs configuration, the service account is bound to the cluster-admin role)
+- Follow the displayed instructions
 
 ### Tests
 
-- Goto 14-example dir: `cd 14-example`
+- Go to 14-example dir: `cd 14-example`
 - Deploy whoami app example: `kubectl apply -f whoami.yml`
 
 ## Credits 👍
