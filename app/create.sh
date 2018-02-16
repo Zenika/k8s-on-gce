@@ -22,8 +22,8 @@ cd /root/app
 
 ansible-playbook -i inventory.cfg 07-etcd/etcd-playbook.yml
 
-ansible-playbook -i inventory.cfg 08-kube-master/kube-master-playbook.yml
-ansible-playbook -i inventory.cfg 08-kube-master/rbac-playbook.yml
+ansible-playbook -i inventory.cfg 08-kube-controller/kube-controller-playbook.yml
+ansible-playbook -i inventory.cfg 08-kube-controller/rbac-playbook.yml
 
 KUBERNETES_PUBLIC_ADDRESS=$(gcloud compute addresses describe kubernetes-the-easy-way \
   --region $(gcloud config get-value compute/region) \
@@ -49,19 +49,6 @@ ansible-playbook -i inventory.cfg 09-kubelet/kubelet-playbook.yml
 
 ./10-kubectl/setup-kubectl.sh
 
-#terraform apply 11-network
-for instance in worker-0 worker-1 worker-2; do
-  gcloud compute instances describe ${instance} \
-    --format 'value[separator=" "](networkInterfaces[0].networkIP,metadata.items[0].value)'
-done
-
-for i in 0 1 2; do
-  gcloud compute routes create kubernetes-route-10-200-${i}-0-24 \
-    --network kubernetes-the-easy-way \
-    --next-hop-address 10.240.0.2${i} \
-    --destination-range 10.200.${i}.0/24
-done
-
-gcloud compute routes list --filter "network: kubernetes-the-easy-way"
+./11-network/network-conf.sh
 
 ./12-kubedns/setup-kubedns.sh

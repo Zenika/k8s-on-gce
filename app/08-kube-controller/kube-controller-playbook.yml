@@ -47,7 +47,7 @@
       dest: /var/lib/kubernetes/encryption-config.yaml
   - name: copy define-kube-services script
     copy:
-      src: /root/app/08-kube-master/define-kube-services.sh
+      src: /root/app/08-kube-controller/define-kube-services.sh
       dest: /root/define-kube-services.sh
       owner: root
       group: root

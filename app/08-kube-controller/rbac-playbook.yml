@@ -3,7 +3,7 @@
   tasks:
   - name: copy rbac-setup script
     copy:
-      src: /root/app/08-kube-master/rbac-setup.sh
+      src: /root/app/08-kube-controller/rbac-setup.sh
       dest: /root/rbac-setup.sh
       owner: root
       group: root
