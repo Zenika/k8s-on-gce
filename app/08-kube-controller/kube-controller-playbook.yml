@@ -41,10 +41,36 @@
     copy:
       src: /root/app/04-certs/kubernetes.pem
       dest: /var/lib/kubernetes/kubernetes.pem
+  - name: copy service account key
+    copy:
+      src: /root/app/04-certs/service-account-key.pem
+      dest: /var/lib/kubernetes/service-account-key.pem
+  - name: copy service account cert
+    copy:
+      src: /root/app/04-certs/service-account.pem
+      dest: /var/lib/kubernetes/service-account.pem
+  - name: copy admin.kubeconfig
+    copy:
+      src: /root/app/05-kubeconfig/admin.kubeconfig
+      dest: /var/lib/kubernetes/admin.kubeconfig
+  - name: copy kube-controller-manager.kubeconfig
+    copy:
+      src: /root/app/05-kubeconfig/kube-controller-manager.kubeconfig
+      dest: /var/lib/kubernetes/kube-controller-manager.kubeconfig
+  - name: copy kube-scheduler.kubeconfig
+    copy:
+      src: /root/app/05-kubeconfig/kube-scheduler.kubeconfig
+      dest: /var/lib/kubernetes/kube-scheduler.kubeconfig
   - name: copy encryption config
     copy:
       src: /root/app/06-encryption/encryption-config.yaml
       dest: /var/lib/kubernetes/encryption-config.yaml
+  - name: create /etc/kubernetes/config dir
+    file: path=/etc/kubernetes/config state=directory
+  - name: copy kube-scheduler config
+    copy:
+      src: /root/app/05-kubeconfig/kube-scheduler.yaml
+      dest: /etc/kubernetes/config/kube-scheduler.yaml
   - name: copy define-kube-services script
     copy:
       src: /root/app/08-kube-controller/define-kube-services.sh

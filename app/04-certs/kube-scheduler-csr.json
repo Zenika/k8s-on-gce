@@ -1,0 +1,17 @@
+{
+  "CN": "system:kube-scheduler",
+  "key": {
+    "algo": "rsa",
+    "size": 2048
+  },
+  "names": [
+    {
+      "C": "FR",
+      "L": "Nantes",
+      "O": "system:kube-scheduler",
+      "OU": "Kubernetes The Easy Way",
+      "ST": "Loire-Atlantique"
+    }
+  ]
+}
+

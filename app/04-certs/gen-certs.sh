@@ -43,6 +43,19 @@ for instance in worker-0 worker-1 worker-2; do
     fi
 done
 
+echo "Generating controler-manager certificate..."
+cfssl gencert \
+  -ca=ca.pem \
+  -ca-key=ca-key.pem \
+  -config=ca-config.json \
+  -profile=kubernetes \
+  kube-controller-manager-csr.json | cfssljson -bare kube-controller-manager
+
+if [ ! -f kube-controller-manager-key.pem ]||[ ! -f kube-controller-manager.pem ]; then
+    echo "Error creating kube-controller-manager certificates"
+    exit -1
+fi
+
 echo "Generating kube-proxy certificate..."
 cfssl gencert \
   -ca=ca.pem \
@@ -53,6 +66,19 @@ cfssl gencert \
 
 if [ ! -f kube-proxy-key.pem ]||[ ! -f kube-proxy.pem ]; then
     echo "Error creating kube-proxy certificates"
+    exit -1
+fi
+
+echo "Generating scheduler certificate..."
+cfssl gencert \
+  -ca=ca.pem \
+  -ca-key=ca-key.pem \
+  -config=ca-config.json \
+  -profile=kubernetes \
+  kube-scheduler-csr.json | cfssljson -bare kube-scheduler
+
+if [ ! -f kube-scheduler-key.pem ]||[ ! -f kube-scheduler.pem ]; then
+    echo "Error creating kube-scheduler certificates"
     exit -1
 fi
 
@@ -73,3 +99,18 @@ if [ ! -f kubernetes-key.pem ]||[ ! -f kubernetes.pem ]; then
     echo "Error creating kubernetes certificates"
     exit -1
 fi
+
+echo "Generating service account certificate..."
+cfssl gencert \
+  -ca=ca.pem \
+  -ca-key=ca-key.pem \
+  -config=ca-config.json \
+  -profile=kubernetes \
+  service-account-csr.json | cfssljson -bare service-account
+
+if [ ! -f service-account-key.pem ]||[ ! -f service-account.pem ]; then
+    echo "Error creating service-account certificates"
+    exit -1
+fi
+
+

@@ -2,7 +2,7 @@
   remote_user: root
   vars:
     cni_plugins_version: "{{ lookup('env','CNI_PLUGINS_VERSION') }}"
-    cri_containerd_version: "{{ lookup('env','CRI_CONTAINERD_VERSION') }}"
+    containerd_version: "{{ lookup('env','CONTAINERD_VERSION') }}"
     kubectl_version: "{{ lookup('env','KUBECTL_VERSION') }}"
   tasks:
   - name: Creates directory /etc/cni/net.d
@@ -17,14 +17,29 @@
     file: path=/var/lib/kubernetes state=directory
   - name: Creates directory /var/run/kubernetes
     file: path=/var/run/kubernetes state=directory
+  - name: Unarchive cri Tools
+    unarchive:
+      src: https://github.com/kubernetes-incubator/cri-tools/releases/download/v1.0.0-beta.0/crictl-v1.0.0-beta.0-linux-amd64.tar.gz
+      dest: /usr/local/bin/
+      remote_src: yes 
+  - name: Unarchive runsc
+    get_url:
+      url: https://storage.googleapis.com/kubernetes-the-hard-way/runsc
+      dest: /usr/local/bin/runsc
+      mode: 0700
+  - name: 
+    get_url:
+      url: https://github.com/opencontainers/runc/releases/download/v1.0.0-rc5/runc.amd64
+      dest: /usr/local/bin/runc
+      mode: 0700
   - name: Unarchive cni-plugins
     unarchive:
       src: https://github.com/containernetworking/plugins/releases/download/{{ cni_plugins_version }}/cni-plugins-amd64-{{ cni_plugins_version }}.tgz
       dest: /opt/cni/bin/
       remote_src: yes
-  - name: get cri-containerd
+  - name: get containerd
     unarchive:
-      src: https://github.com/kubernetes-incubator/cri-containerd/releases/download/v{{ cri_containerd_version }}/cri-containerd-{{ cri_containerd_version }}.linux-amd64.tar.gz
+      src: https://github.com/containerd/containerd/releases/download/v{{ containerd_version }}/containerd-{{ containerd_version }}.linux-amd64.tar.gz
       dest: /
       remote_src: yes
   - name: get kubectl
@@ -73,7 +88,7 @@
     command: /root/gen-kubelet-conf.sh
   - name: Reload systemd
     command: systemctl daemon-reload
-  - name: Enable containerd cri-containerd kubelet kube-proxy
-    command: systemctl enable containerd cri-containerd kubelet kube-proxy
-  - name: Start containerd cri-containerd kubelet kube-proxy
-    command: systemctl start containerd cri-containerd kubelet kube-proxy
+  - name: Enable containerd kubelet kube-proxy
+    command: systemctl enable containerd kubelet kube-proxy
+  - name: Start containerd kubelet kube-proxy
+    command: systemctl start containerd kubelet kube-proxy

@@ -79,7 +79,7 @@ resource "google_compute_instance" "controller" {
 
   boot_disk {
     initialize_params {
-      image = "ubuntu-os-cloud/ubuntu-1604-lts"
+      image = "ubuntu-os-cloud/ubuntu-1804-lts"
     }
   }
 
@@ -103,6 +103,8 @@ resource "google_compute_instance" "controller" {
   metadata = {
     sshKeys = "${var.gce_ssh_user}:${file(var.gce_ssh_pub_key_file)}"
   }
+
+  metadata_startup_script = "apt-get install -y python"
 }
 
 resource "google_compute_instance" "worker" {
@@ -116,7 +118,7 @@ resource "google_compute_instance" "worker" {
 
   boot_disk {
     initialize_params {
-      image = "ubuntu-os-cloud/ubuntu-1604-lts"
+      image = "ubuntu-os-cloud/ubuntu-1804-lts"
     }
   }
 
@@ -141,4 +143,6 @@ resource "google_compute_instance" "worker" {
     pod-cidr = "10.200.${count.index}.0/24"
     sshKeys = "${var.gce_ssh_user}:${file(var.gce_ssh_pub_key_file)}"
   }
+
+  metadata_startup_script = "apt-get install -y python"
 }
