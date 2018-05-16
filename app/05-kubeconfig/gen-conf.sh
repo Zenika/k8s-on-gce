@@ -1,8 +1,9 @@
 #!/bin/sh
 
 KUBERNETES_PUBLIC_ADDRESS=$(gcloud compute addresses describe kubernetes-the-easy-way \
-  --region $(gcloud config get-value compute/region) \
+  --region $GCLOUD_REGION \
   --format 'value(address)')
+echo "Kubernetes public address: ${KUBERNETES_PUBLIC_ADDRESS}"
 
 for instance in worker-0 worker-1 worker-2; do
   echo "Generating ${instance} config..."

@@ -3,3 +3,7 @@
 *.tfstate*
 *inventory.cfg
 *.retry
+*.pem
+*.csr
+*.kubeconfig
+*encryption-config.yaml
