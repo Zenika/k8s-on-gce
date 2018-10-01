@@ -1,26 +1,26 @@
 - hosts: controllers
   remote_user: root
   vars:
-    kubectl_version: "{{ lookup('env','KUBECTL_VERSION') }}"
+    kube_version: "{{ lookup('env','KUBE_VERSION') }}"
   tasks:
   - name: get kube-apiserver
     get_url:
-      url: https://storage.googleapis.com/kubernetes-release/release/{{ kubectl_version }}/bin/linux/amd64/kube-apiserver
+      url: https://storage.googleapis.com/kubernetes-release/release/{{ kube_version }}/bin/linux/amd64/kube-apiserver
       dest: /usr/local/bin/kube-apiserver
       mode: 0700
   - name: get kube-controller-manager
     get_url:
-      url: https://storage.googleapis.com/kubernetes-release/release/{{ kubectl_version }}/bin/linux/amd64/kube-controller-manager
+      url: https://storage.googleapis.com/kubernetes-release/release/{{ kube_version }}/bin/linux/amd64/kube-controller-manager
       dest: /usr/local/bin/kube-controller-manager
       mode: 0700
   - name: get kube-scheduler
     get_url:
-      url: https://storage.googleapis.com/kubernetes-release/release/{{ kubectl_version }}/bin/linux/amd64/kube-scheduler
+      url: https://storage.googleapis.com/kubernetes-release/release/{{ kube_version }}/bin/linux/amd64/kube-scheduler
       dest: /usr/local/bin/kube-scheduler
       mode: 0700
   - name: get kubectl
     get_url:
-      url: https://storage.googleapis.com/kubernetes-release/release/{{ kubectl_version }}/bin/linux/amd64/kubectl
+      url: https://storage.googleapis.com/kubernetes-release/release/{{ kube_version }}/bin/linux/amd64/kubectl
       dest: /usr/local/bin/kubectl
       mode: 0700
   - name: Creates directory /var/lib/kubernetes

@@ -3,7 +3,7 @@ FROM python:2.7-alpine
 ENV TERRAFORM_VERSION=0.11.3 \
     GCLOUD_SDK_VERSION=200.0.0 \
     CFSSL_VERSION=R1.2 \
-    KUBECTL_VERSION=v1.10.2
+    KUBE_VERSION=v1.12.0
 
 ENV GCLOUD_SDK_FILE=google-cloud-sdk-${GCLOUD_SDK_VERSION}-linux-x86_64.tar.gz \
     TERRAFORM_FILE=terraform_${TERRAFORM_VERSION}_linux_amd64.zip
@@ -13,7 +13,7 @@ RUN apk update && \
     curl -o /root/$GCLOUD_SDK_FILE https://dl.google.com/dl/cloudsdk/channels/rapid/downloads/$GCLOUD_SDK_FILE && \
     curl -o /usr/local/bin/cfssl https://pkg.cfssl.org/$CFSSL_VERSION/cfssl_linux-amd64 && \
     curl -o /usr/local/bin/cfssljson https://pkg.cfssl.org/$CFSSL_VERSION/cfssljson_linux-amd64 && \
-    curl -o /usr/local/bin/kubectl https://storage.googleapis.com/kubernetes-release/release/$KUBECTL_VERSION/bin/linux/amd64/kubectl && \
+    curl -o /usr/local/bin/kubectl https://storage.googleapis.com/kubernetes-release/release/$KUBE_VERSION/bin/linux/amd64/kubectl && \
     curl -o /root/$TERRAFORM_FILE https://releases.hashicorp.com/terraform/$TERRAFORM_VERSION/$TERRAFORM_FILE
 
 WORKDIR /root
