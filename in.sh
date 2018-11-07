@@ -2,7 +2,7 @@
 
 docker build . -t k8s-on-gce/tools
 
-if [[ $? -eq 0 ]]; then
+if [ $? -eq 0 ]; then
     docker rm -f k8s-on-gce-tools 
     
     docker run -it \

@@ -89,7 +89,7 @@ resource "google_compute_instance" "controller" {
 
   network_interface {
     subnetwork = "${google_compute_subnetwork.default.name}"
-    address = "10.240.0.1${count.index}"
+    network_ip = "10.240.0.1${count.index}"
 
     access_config {
       // Ephemeral IP
@@ -128,7 +128,7 @@ resource "google_compute_instance" "worker" {
 
   network_interface {
     subnetwork = "${google_compute_subnetwork.default.name}"
-    address = "10.240.0.2${count.index}"
+    network_ip = "10.240.0.2${count.index}"
 
     access_config {
       // Ephemeral IP
