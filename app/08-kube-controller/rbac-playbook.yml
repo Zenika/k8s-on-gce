@@ -10,6 +10,6 @@
       mode: 0744
   - name: waiting for kube to start
     pause:
-      seconds: 15
+      seconds: 25
   - name: Setup RBAC
     command: /root/rbac-setup.sh

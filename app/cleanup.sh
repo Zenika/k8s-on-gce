@@ -1,5 +1,9 @@
 #!/bin/sh
 
+#destroy web firewall
+gcloud -q compute firewall-rules delete \
+  kubernetes-the-easy-way-allow-web || true
+
 #terraform destroy 11-network
 gcloud -q compute routes delete \
   kubernetes-route-10-200-0-0-24 \

@@ -86,6 +86,10 @@
       mode: 0744
   - name: Generate kubelet... conf
     command: /root/gen-kubelet-conf.sh
+  - name: Install socat on nodes
+    apt:
+      name: socat
+      update_cache: yes
   - name: Reload systemd
     command: systemctl daemon-reload
   - name: Enable containerd kubelet kube-proxy
