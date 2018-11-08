@@ -49,6 +49,18 @@
     copy:
       src: /root/app/04-certs/service-account.pem
       dest: /var/lib/kubernetes/service-account.pem
+  - name: copy front-proxy ca cert
+    copy:
+      src: /root/app/04-certs/ca-front-proxy.pem
+      dest: /var/lib/kubernetes/ca-front-proxy.pem
+  - name: copy front-proxy cert
+    copy:  
+      src: /root/app/04-certs/front-proxy-client.pem
+      dest: /var/lib/kubernetes/front-proxy-client.pem
+  - name: copy front-proxy key
+    copy:  
+      src: /root/app/04-certs/front-proxy-client-key.pem
+      dest: /var/lib/kubernetes/front-proxy-client-key.pem
   - name: copy admin.kubeconfig
     copy:
       src: /root/app/05-kubeconfig/admin.kubeconfig
