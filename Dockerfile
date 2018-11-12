@@ -3,7 +3,7 @@ FROM python:2.7-alpine
 ENV TERRAFORM_VERSION=0.11.3 \
     GCLOUD_SDK_VERSION=200.0.0 \
     CFSSL_VERSION=R1.2 \
-    KUBE_VERSION=v1.12.0
+    KUBE_VERSION=v1.12.2
 
 ENV GCLOUD_SDK_FILE=google-cloud-sdk-${GCLOUD_SDK_VERSION}-linux-x86_64.tar.gz \
     TERRAFORM_FILE=terraform_${TERRAFORM_VERSION}_linux_amd64.zip
