@@ -113,4 +113,23 @@ if [ ! -f service-account-key.pem ]||[ ! -f service-account.pem ]; then
     exit -1
 fi
 
+echo "Generating front-proxy ca certificate..."
+cfssl gencert -initca ca-front-proxy-csr.json | cfssljson -bare ca-front-proxy
 
+if [ ! -f ca-front-proxy-key.pem ]||[ ! -f ca-front-proxy.pem ]; then
+    echo "Error creating front-proxy CA certificates"
+    exit -1
+fi
+
+echo "Generating front-proxy-client certificate..."
+cfssl gencert \
+  -ca=ca-front-proxy.pem \
+  -ca-key=ca-front-proxy-key.pem \
+  -config=ca-front-proxy-config.json \
+  -profile=kubernetes \
+  front-proxy-client-csr.json | cfssljson -bare front-proxy-client
+
+if [ ! -f front-proxy-client.pem ]||[ ! -f front-proxy-client.pem ]; then
+    echo "Error creating front-proxy-client certificates"
+    exit -1
+fi
